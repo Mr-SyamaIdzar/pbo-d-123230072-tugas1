@@ -1,6 +1,6 @@
 package LoginPage.Main;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 import javax.swing.*;
 
 public class mainPage extends JFrame {
@@ -18,11 +18,17 @@ public class mainPage extends JFrame {
     // Simpan 
     JButton btnsave = new JButton("Simpan");
     
+    // Status btnsave
+    JLabel saveStatus = new JLabel("Status");
+    
     // TextArea
     JTextArea textArea = new JTextArea(10, 30);
     
     // Convert
     JButton btnconvert = new JButton("Convert to .txt");
+    
+    // Status btnconvert
+    JLabel convertStatus = new JLabel("Status");
     
     public mainPage() {
         setTitle("Halaman Input Data");
@@ -32,20 +38,50 @@ public class mainPage extends JFrame {
         
         // Panel Utama
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        // mainPanel.setBackground(Color.YELLOW);
         
-        // Panel untuk Input Nama
-        JPanel namePanel = new JPanel();
-        namePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        namePanel.add(lfirstName);
-        namePanel.add(ffirstName);
-        namePanel.add(llastName);
-        namePanel.add(flastName);
+        gbc.insets = new Insets(2,2,2,2);
+         
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(lfirstName);
+        
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(llastName, gbc);
+
+        // Panel untuk Input Nama Belakang
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(ffirstName, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(flastName, gbc);
+        
+//        // Panel untuk Input Nama
+//        JPanel lNamePanel = new JPanel();
+//        lNamePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//        lNamePanel.add(lfirstName);
+//        lNamePanel.add(llastName);
+//        
+//        JPanel fNamePanel = new JPanel();
+//        fNamePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//        fNamePanel.add(ffirstName);
+//        fNamePanel.add(flastName);
         
         // Panel untuk Jenis Kelamin
-        JPanel lgenderPanel = new JPanel();
-        lgenderPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        lgenderPanel.add(lgender);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(lgender, gbc);
+        
         JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         ButtonGroup genderGroup = new ButtonGroup();
@@ -54,18 +90,46 @@ public class mainPage extends JFrame {
         genderPanel.add(rpria);
         genderPanel.add(rwanita);
         
-        // TextArea untuk Menampilkan Data 
-        textArea.setEditable(true);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(genderPanel, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2; // Mengambil 2 kolom
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(btnsave, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2; // Mengambil 2 kolom
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(saveStatus, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.BOTH;
         JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setEditable(false);
+        mainPanel.add(scrollPane, gbc);
+        
+        // Tombol Convert
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 2; // Mengambil 2 kolom
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(convertStatus, gbc);
         
         // Menambhakan Komponen ke Panel Utama
-        mainPanel.add(namePanel);
-        mainPanel.add(lgenderPanel);
-        mainPanel.add(genderPanel);
-        mainPanel.add(btnsave);
-        mainPanel.add(scrollPane);
-        mainPanel.add(btnconvert);
-        
         add(mainPanel);
         
         setVisible(true);
