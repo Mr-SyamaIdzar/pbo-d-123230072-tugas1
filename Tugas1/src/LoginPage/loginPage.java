@@ -4,6 +4,7 @@
  */
 package LoginPage;
 
+import LoginPage.Main.mainPage;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -54,11 +55,12 @@ public class loginPage extends JFrame implements ActionListener{
     }
     
     public void validateLogin() {
-        String username = fusername.getText();
-        String password = fpassword.getText();
+        String username = fusername.getText().trim();
+        String password = fpassword.getText().trim();
         
         if (username.equalsIgnoreCase("pbo") && password.equalsIgnoreCase("if-d")) {
-            
+            new mainPage();
+            dispose();
         } else {
             lstatus.setText("Gagal login");
         }

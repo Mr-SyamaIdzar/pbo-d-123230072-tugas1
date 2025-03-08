@@ -1,8 +1,8 @@
 package LoginPage.Main;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.*;
 import javax.swing.*;
 
 public class mainPage extends JFrame {
@@ -16,6 +16,7 @@ public class mainPage extends JFrame {
     JLabel lgender = new JLabel("Jenis Kelamin:");
     JRadioButton rpria = new JRadioButton("Pria");
     JRadioButton rwanita = new JRadioButton("Wanita");
+    ButtonGroup genderGroup = new ButtonGroup();
     
     // Simpan 
     JButton btnsave = new JButton("Simpan");
@@ -75,7 +76,6 @@ public class mainPage extends JFrame {
         
         JPanel genderPanel = new JPanel();
         genderPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        ButtonGroup genderGroup = new ButtonGroup();
         genderGroup.add(rpria);
         genderGroup.add(rwanita);
         genderPanel.add(rpria);
@@ -92,6 +92,7 @@ public class mainPage extends JFrame {
         gbc.gridy = 4;
         gbc.gridwidth = 2; // Mengambil 2 kolom
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        btnsave.addActionListener(new actionSave());
         mainPanel.add(btnsave, gbc);
         
         gbc.gridx = 0;
@@ -119,13 +120,37 @@ public class mainPage extends JFrame {
         gbc.gridy = 8;
         gbc.gridwidth = 2; // Mengambil 2 kolom
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        btnconvert.addActionListener(new actionConvert());
         mainPanel.add(convertStatus, gbc);
         
         // Menambhakan Komponen ke Panel Utama
         add(mainPanel);
         
-        btnsave.addActionListener(new ActionListener() {
-            public String gender() {
+        setVisible(true);
+        readFile();
+    }
+    
+    class actionSave implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String firstName = ffirstName.getText().trim();
+                String lastName = flastName.getText().trim();
+                String gender = gender();
+                
+                if (firstName.isEmpty() || lastName.isEmpty() || gender.isEmpty()) {
+                    saveStatus.setText("Data harus lengkap");
+                } else {
+                    String data = firstName + " " + lastName + " | Gender : " + gender + "\n";
+                    textArea.setText(data);
+                    ffirstName.setText("");
+                    flastName.setText("");
+                    genderGroup.clearSelection();
+                }
+        }   
+    }
+    
+    public String gender() {
                 if (rpria.isSelected()) {
                     return "Pria";
                 } else if (rwanita.isSelected()) {
@@ -134,25 +159,22 @@ public class mainPage extends JFrame {
                     return "";
                 }
             }
-            
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String firstName = ffirstName.getText().trim();
-                String lastName = flastName.getText().trim();
-                String gender = gender();
-                
-                if (firstName.isEmpty() || lastName.isEmpty() || gender.isEmpty()) {
-                    saveStatus.setText("Data harus lengkap");
-                } else {
-                    String data = firstName + " " + lastName + " | Gender : " + gender;
-                    textArea.setText(data);
-                    ffirstName.setText("");
-                    flastName.setText("");
-                    genderGroup.clearSelection();
-                }
-            }
-        });
+    
+    class actionConvert implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                textArea.write(new FileWriter("data_123230072.txt", true)); // Memberikan nilai true agar data tidak saling menimpa
+                JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan", "Message", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException er) {}
+        }
+    }
         
-        setVisible(true);
+    public void readFile() {
+        try {
+            textArea.read(new FileReader("data_123230072.txt"), null);
+            textArea.write(new OutputStreamWriter(new FileOutputStream("data_123230072.txt")));
+        } catch (IOException e) {}
     }
 }
