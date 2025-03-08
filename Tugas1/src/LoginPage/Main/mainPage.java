@@ -1,6 +1,8 @@
 package LoginPage.Main;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class mainPage extends JFrame {
@@ -19,7 +21,7 @@ public class mainPage extends JFrame {
     JButton btnsave = new JButton("Simpan");
     
     // Status btnsave
-    JLabel saveStatus = new JLabel("Status");
+    JLabel saveStatus = new JLabel("");
     
     // TextArea
     JTextArea textArea = new JTextArea(10, 30);
@@ -64,17 +66,6 @@ public class mainPage extends JFrame {
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         mainPanel.add(flastName, gbc);
-        
-//        // Panel untuk Input Nama
-//        JPanel lNamePanel = new JPanel();
-//        lNamePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//        lNamePanel.add(lfirstName);
-//        lNamePanel.add(llastName);
-//        
-//        JPanel fNamePanel = new JPanel();
-//        fNamePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//        fNamePanel.add(ffirstName);
-//        fNamePanel.add(flastName);
         
         // Panel untuk Jenis Kelamin
         gbc.gridx = 0;
@@ -122,6 +113,7 @@ public class mainPage extends JFrame {
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(btnconvert, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 8;
@@ -131,6 +123,35 @@ public class mainPage extends JFrame {
         
         // Menambhakan Komponen ke Panel Utama
         add(mainPanel);
+        
+        btnsave.addActionListener(new ActionListener() {
+            public String gender() {
+                if (rpria.isSelected()) {
+                    return "Pria";
+                } else if (rwanita.isSelected()) {
+                    return "Wanita";
+                } else {
+                    return "";
+                }
+            }
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String firstName = ffirstName.getText().trim();
+                String lastName = flastName.getText().trim();
+                String gender = gender();
+                
+                if (firstName.isEmpty() || lastName.isEmpty() || gender.isEmpty()) {
+                    saveStatus.setText("Data harus lengkap");
+                } else {
+                    String data = firstName + " " + lastName + " | Gender : " + gender;
+                    textArea.setText(data);
+                    ffirstName.setText("");
+                    flastName.setText("");
+                    genderGroup.clearSelection();
+                }
+            }
+        });
         
         setVisible(true);
     }
