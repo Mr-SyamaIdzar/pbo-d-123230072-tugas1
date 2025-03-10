@@ -59,8 +59,8 @@ public class loginPage extends JFrame implements ActionListener{
         String password = fpassword.getText().trim();
         
         if (username.equalsIgnoreCase("pbo") && password.equalsIgnoreCase("if-d")) {
-            new mainPage();
-            dispose();
+            new mainPage(); // Berpindah frame
+            dispose(); // Menghilangkan frame login
         } else {
             lstatus.setText("Gagal login");
         }

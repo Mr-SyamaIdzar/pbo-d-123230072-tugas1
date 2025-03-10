@@ -16,28 +16,29 @@ public class mainPage extends JFrame {
     JLabel lgender = new JLabel("Jenis Kelamin:");
     JRadioButton rpria = new JRadioButton("Pria");
     JRadioButton rwanita = new JRadioButton("Wanita");
-    ButtonGroup genderGroup = new ButtonGroup();
+    ButtonGroup genderGroup = new ButtonGroup(); // Untuk mengelompokan radiobtn
     
-    // Simpan 
+    // Save Button
     JButton btnsave = new JButton("Simpan");
     
     // Status btnsave
     JLabel saveStatus = new JLabel("");
     
     // TextArea
+    // Baris 10 kolom 30
     JTextArea textArea = new JTextArea(10, 30);
     
-    // Convert
+    // Convert Button
     JButton btnconvert = new JButton("Convert to .txt");
     
     // Status btnconvert
-    JLabel convertStatus = new JLabel("Status");
+    JLabel convertStatus = new JLabel("");
     
     public mainPage() {
         setTitle("Halaman Input Data");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Menghentikan program saat frame di close
         setSize(500, 400);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // Menengahkan frame
         
         // Panel Utama
         JPanel mainPanel = new JPanel();
@@ -49,7 +50,7 @@ public class mainPage extends JFrame {
          
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.anchor = GridBagConstraints.WEST; // Menempatkan posisi di bagian kiri
         mainPanel.add(lfirstName);
         
         gbc.gridx = 1;
@@ -60,7 +61,7 @@ public class mainPage extends JFrame {
         // Panel untuk Input Nama Belakang
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Mengisi seluruh frame ke arah horizontal
         mainPanel.add(ffirstName, gbc);
 
         gbc.gridx = 1;
@@ -83,7 +84,7 @@ public class mainPage extends JFrame {
         
         gbc.gridx = 0;
         gbc.gridy = 3;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 2; // Mengambil 2 kolom
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.CENTER;
         mainPanel.add(genderPanel, gbc);
@@ -98,13 +99,12 @@ public class mainPage extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2; // Mengambil 2 kolom
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
         mainPanel.add(saveStatus, gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.BOTH;
         JScrollPane scrollPane = new JScrollPane(textArea);
         textArea.setEditable(false);
         mainPanel.add(scrollPane, gbc);
@@ -119,7 +119,7 @@ public class mainPage extends JFrame {
         gbc.gridx = 0;
         gbc.gridy = 8;
         gbc.gridwidth = 2; // Mengambil 2 kolom
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST;
         btnconvert.addActionListener(new actionConvert());
         mainPanel.add(convertStatus, gbc);
         
