@@ -47,7 +47,7 @@ public class loginPage extends JFrame implements ActionListener{
         lpassword.setBounds(10, 35, 120, 20);
         fpassword.setBounds(130, 35, 200, 20);
         btnLogin.setBounds(140, 60, 70, 20);
-        lstatus.setBounds(140, 130, 200, 20);
+        lstatus.setBounds(140, 130, 350, 20);
         
         btnLogin.addActionListener(this);
         
