@@ -18,7 +18,7 @@ public class loginPage extends JFrame implements ActionListener{
     private JLabel lusername = new JLabel("Username:");
     
     // Password
-    private final JTextField fpassword = new JTextField(10);
+    private final JPasswordField fpassword = new JPasswordField(10);
     private JLabel lpassword = new JLabel("Password:");
     
     // Button
@@ -55,8 +55,8 @@ public class loginPage extends JFrame implements ActionListener{
     }
     
     public void validateLogin() {
-        String username = fusername.getText().trim();
-        String password = fpassword.getText().trim();
+        String username = fusername.getText().toLowerCase().trim();
+        String password = new String(fpassword.getPassword());
         
         if (username.equalsIgnoreCase("pbo") && password.equalsIgnoreCase("if-d")) {
             new mainPage(); // Berpindah frame

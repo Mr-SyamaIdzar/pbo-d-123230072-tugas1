@@ -3,6 +3,7 @@ package LoginPage.Main;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class mainPage extends JFrame {
@@ -33,6 +34,9 @@ public class mainPage extends JFrame {
     
     // Status btnconvert
     JLabel convertStatus = new JLabel("");
+    
+    // ArrayList untuk menyimpan data
+    ArrayList<String> dataList = new ArrayList<>();
     
     public mainPage() {
         setTitle("Halaman Input Data");
@@ -127,7 +131,7 @@ public class mainPage extends JFrame {
         add(mainPanel);
         
         setVisible(true);
-        readFile();
+//        readFile();
     }
     
     class actionSave implements ActionListener {
@@ -135,9 +139,8 @@ public class mainPage extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             String firstName = ffirstName.getText().trim();
-                String lastName = flastName.getText().trim();
-                String gender = gender();
-                
+            String lastName = flastName.getText().trim();
+            String gender = gender(); 
                 if (firstName.isEmpty() || lastName.isEmpty() || gender.isEmpty()) {
                     saveStatus.setText("Data harus lengkap");
                 } else {
@@ -162,19 +165,30 @@ public class mainPage extends JFrame {
     
     class actionConvert implements ActionListener {
 
-        @Override
+       @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                textArea.write(new FileWriter("data_123230072.txt", true)); // Memberikan nilai true agar data tidak saling menimpa
+            try (FileWriter writer = new FileWriter("data_123230072.txt", true)) {
+                for (String data : dataList) {
+                    writer.write(data); // Menulis data dari ArrayList ke file
+                }
                 JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan", "Message", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException er) {}
+                dataList.clear(); // Mengosongkan ArrayList setelah data disimpan
+                textArea.setText(""); // Mengosongkan TextArea
+            } catch (IOException er) {
+                er.printStackTrace();
+            }
         }
     }
         
     public void readFile() {
-        try {
-            textArea.read(new FileReader("data_123230072.txt"), null);
-            textArea.write(new OutputStreamWriter(new FileOutputStream("data_123230072.txt")));
-        } catch (IOException e) {}
+        try (BufferedReader reader = new BufferedReader(new FileReader("data_123230072.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                dataList.add(line + "\n"); // Membaca data dari file dan menambahkannya ke ArrayList
+                textArea.append(line + "\n"); // Menampilkan data di TextArea
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
